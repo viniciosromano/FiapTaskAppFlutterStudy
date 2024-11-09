@@ -43,4 +43,21 @@ class TaskProvider with ChangeNotifier {
       print(e);
     }
   }
+
+  Future<void> taskCompletion(String id) async {
+    final index = _tasks.indexWhere((task) => task.id == id);
+    if (index != -1) {
+      Task updatedTask = _tasks[index].copyWith(
+        isCompleted: !_tasks[index].isCompleted,
+      );
+
+      try {
+        await _repo.updateTask(updatedTask);
+        _tasks[index] = updatedTask;
+        notifyListeners();
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
 }

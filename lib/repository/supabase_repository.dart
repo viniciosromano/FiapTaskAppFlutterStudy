@@ -62,4 +62,9 @@ class SupabaseRepository {
     final supabase = Supabase.instance.client;
     await supabase.from('task_groups').delete().eq('id', taskGroupId);
   }
+
+  Future updateTask(Task updatedTask) async {
+    final supabase = Supabase.instance.client;
+    await supabase.from('tasks').update(updatedTask.toMap()).eq('id', updatedTask.id);
+  }
 }
